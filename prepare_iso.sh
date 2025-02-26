@@ -3,7 +3,7 @@
 # Setup variables
 WORK_DIR="/home/cirrus0/cloud_deployment/ubuntu_server_autoinstall_usb"
 ISO_DIR="/home/cirrus0/Downloads/os_images"
-ISO_NAME="ubuntu-22.04.5-live-server-amd64.iso"
+ISO_NAME="ubuntu-24.04.2-live-server-amd64.iso"
 ISO_PATH="$ISO_DIR/$ISO_NAME"
 SOURCE_DIR="$WORK_DIR/source-files"
 BOOT_DIR="$WORK_DIR/BOOT"

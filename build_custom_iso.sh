@@ -3,7 +3,7 @@
 # Setup variables
 WORK_DIR="/home/cirrus0/cloud_deployment/ubuntu_server_autoinstall_usb"
 SOURCE_DIR="$WORK_DIR/source-files"
-OUTPUT_ISO="$WORK_DIR/ubuntu-22.04-autoinstall.iso"
+OUTPUT_ISO="$WORK_DIR/ubuntu-24.04-autoinstall.iso"
 BOOT_DIR="$WORK_DIR/BOOT"
 
 # Copy the user-data file to the source directory
@@ -28,7 +28,7 @@ cd "$SOURCE_DIR"
 
 # Use the comprehensive xorriso command from the instructions to ensure UEFI boot support
 xorriso -as mkisofs -r \
-  -V 'Ubuntu 22.04 LTS AUTO (EFIBIOS)' \
+  -V 'Ubuntu 24.04 LTS AUTO (EFIBIOS)' \
   -o "$OUTPUT_ISO" \
   --grub2-mbr "$BOOT_DIR/1-Boot-NoEmul.img" \
   -partition_offset 16 \

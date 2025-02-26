@@ -2,7 +2,7 @@
 
 # Setup variables
 WORK_DIR="/home/cirrus0/cloud_deployment/ubuntu_server_autoinstall_usb"
-ISO_PATH="$WORK_DIR/ubuntu-22.04-autoinstall.iso"
+ISO_PATH="$WORK_DIR/ubuntu-24.04-autoinstall.iso"
 
 # Check if the ISO exists
 if [ ! -f "$ISO_PATH" ]; then
@@ -60,5 +60,5 @@ sudo sync
 
 echo ""
 echo "USB drive preparation completed."
-echo "You can now boot from this USB drive to perform an autoinstall of Ubuntu Server 22.04."
+echo "You can now boot from this USB drive to perform an autoinstall of Ubuntu Server 24.04."
 echo ""

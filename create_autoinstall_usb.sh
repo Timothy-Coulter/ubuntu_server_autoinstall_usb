@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Main script to create Ubuntu Server 22.04 autoinstall USB
+# Main script to create Ubuntu Server 24.04 autoinstall USB
 # This script orchestrates the entire process
 
 WORK_DIR="/home/cirrus0/cloud_deployment/ubuntu_server_autoinstall_usb"
 cd "$WORK_DIR"
 
 echo "===================================================="
-echo "Ubuntu Server 22.04 Autoinstall USB Creation Utility"
+echo "Ubuntu Server 24.04 Autoinstall USB Creation Utility"
 echo "===================================================="
 echo ""
 
@@ -25,7 +25,7 @@ echo "Prerequisites check completed."
 echo ""
 
 # Step 2: Check and download ISO if needed
-echo "[Step 2/5] Checking for Ubuntu 22.04 Server ISO..."
+echo "[Step 2/5] Checking for Ubuntu 24.04 Server ISO..."
 ./check_download_iso.sh
 if [ $? -ne 0 ]; then
     echo "Failed to check/download ISO. Exiting."
@@ -63,7 +63,7 @@ if [[ "$CONTINUE" != "yes" ]]; then
     echo "USB preparation skipped."
     echo "You can run ./prepare_usb.sh later to prepare your USB drive."
     echo ""
-    echo "Custom autoinstall ISO is available at: $WORK_DIR/ubuntu-22.04-autoinstall.iso"
+    echo "Custom autoinstall ISO is available at: $WORK_DIR/ubuntu-24.04-autoinstall.iso"
     exit 0
 fi
 
@@ -75,7 +75,7 @@ fi
 
 echo ""
 echo "===================================================="
-echo "Ubuntu Server 22.04 Autoinstall USB creation process completed."
+echo "Ubuntu Server 24.04 Autoinstall USB creation process completed."
 echo "You can now boot from this USB drive to perform an autoinstall"
-echo "of Ubuntu Server 22.04 with the configured settings."
+echo "of Ubuntu Server 24.04 with the configured settings."
 echo "===================================================="
