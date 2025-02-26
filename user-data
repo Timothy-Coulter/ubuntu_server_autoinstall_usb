@@ -1,0 +1,82 @@
+#cloud-config
+autoinstall:
+  version: 1
+  interactive-sections: []  # Empty array means no sections will wait for user input
+  storage:
+    config:
+      - type: disk
+        id: disk-largest
+        match:
+          size: largest
+        preserve: false
+        wipe: superblock-recursive
+        ptable: gpt
+      - type: lvm_volgroup
+        id: vg0
+        devices:
+          - disk-largest
+      - type: lvm_partition
+        id: lvm-root
+        volgroup: vg0
+        size: 15G
+      - type: lvm_partition
+        id: lvm-home
+        volgroup: vg0
+        size: -1
+      - type: format
+        id: format-root
+        volume: lvm-root
+        fstype: ext4
+      - type: format
+        id: format-home
+        volume: lvm-home
+        fstype: ext4
+      - type: mount
+        id: mount-root
+        device: format-root
+        path: /
+      - type: mount
+        id: mount-home
+        device: format-home
+        path: /home
+  locale: en_US.UTF-8
+  keyboard:
+    layout: us
+  identity:
+    hostname: ubuntu-server
+    password: $6$PiTL.ZmMVYG6U4q4$qa8lkOtlAAioKLKqt1q1Ci03HUAE4xRnhrvNd1x1oaSVoma2sTRCHtvt2/QV61tn0QQF6m2e/n0Uf1fQ/3yid0
+    username: ubuntu
+  ssh:
+    allow-pw: true
+    install-server: true
+  apt:
+    primary:
+      - arches: [default]
+        uri: http://us.archive.ubuntu.com/ubuntu/
+  packages: 
+    - build-essential
+    - network-manager
+    - dkms
+  package_update: true
+  package_upgrade: true
+  late-commands:
+    # Changing from NetworkManager to networkd
+    # move existing config out of the way
+    - find /target/etc/netplan/ -name "*.yaml" -exec sh -c 'mv "$1" "$1-orig"' _ {} \;
+    # Create a new netplan and enable it
+    - |
+      cat <<EOF | sudo tee /target/etc/netplan/01-netcfg.yaml
+      network:
+        version: 2
+        renderer: networkd
+      EOF
+    - curtin in-target --target /target netplan generate
+    - curtin in-target --target /target netplan apply
+    # Stop, disable, and mask NetworkManager
+    - curtin in-target --target /target systemctl stop NetworkManager.service
+    - curtin in-target --target /target systemctl disable NetworkManager.service
+    - curtin in-target --target /target systemctl mask NetworkManager.service
+    # Unmask, enable, and start systemd-networkd
+    - curtin in-target --target /target systemctl unmask systemd-networkd.service
+    - curtin in-target --target /target systemctl enable systemd-networkd.service
+    - curtin in-target --target /target systemctl start systemd-networkd.service

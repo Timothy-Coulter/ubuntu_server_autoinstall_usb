@@ -1,122 +1,60 @@
-# Ubuntu Server 24.04 Autoinstall USB Creator
+# Ubuntu Server 22.04 Autoinstall USB Creator
 
-This project provides a set of scripts to create a USB drive for non-interactive installation of Ubuntu Server 24.04. The scripts handle both ISO and IMG image files and create a fully automated installation process.
+This toolkit automates the creation of a bootable USB drive that performs an unattended installation of Ubuntu Server 22.04 LTS.
 
 ## Features
 
-- Downloads Ubuntu Server 24.04 image if not already available
-- Formats and prepares USB drives for installation
-- Supports both ISO and IMG image files
-- Creates customizable templates for autoinstall, cloud-init, and network configuration
-- Provides testing capabilities using KVM
-- Separates functionality into modular scripts for maintainability
+- Automatic checking and installation of required dependencies
+- Checks for existing Ubuntu 22.04 Server ISO before downloading
+- Unpacks and modifies the ISO to support autoinstallation
+- Creates a custom bootable ISO with autoinstall configuration
+- Prepares a USB drive for unattended installation
 
-## Prerequisites
+## Scripts Overview
 
-The scripts require the following tools to be installed:
-
-- bash
-- wget
-- lsblk
-- parted
-- mkfs.vfat
-- mkfs.ext4
-- mount/umount
-- rsync
-- dd
-- sha256sum
-- file
-- qemu-system-x86_64 (for KVM testing)
-- xorriso (for ISO manipulation)
-
-You can install these dependencies on Ubuntu with:
-
-```bash
-sudo apt update
-sudo apt install -y wget parted dosfstools e2fsprogs rsync coreutils file qemu-system-x86 xorriso
-```
-
-## Directory Structure
-
-```
-ubuntu_server_autoinstall_usb/
-├── create_ubuntu_usb.sh       # Main entrypoint script
-├── README.md                  # This file
-├── scripts/                   # Utility scripts
-│   ├── check_dependencies.sh  # Check for required tools
-│   ├── create_templates.sh    # Create template files
-│   ├── download_image.sh      # Download Ubuntu Server image
-│   ├── format_usb.sh          # Format USB drive
-│   ├── prepare_usb.sh         # Prepare USB with image and files
-│   └── utils.sh               # Common utility functions
-├── templates/                 # Template files
-│   ├── meta-data.yml          # Instance metadata
-│   ├── network-config.yml     # Network configuration
-│   └── user-data.yml          # System configuration
-└── tests/                     # Test scripts
-    ├── test_autoinstall.sh    # Test autoinstall configuration
-    ├── test_cloud_init.sh     # Test cloud-init configuration
-    └── test_kvm.sh            # Test with KVM
-```
+- `create_autoinstall_usb.sh`: Main script that orchestrates the entire process
+- `check_prerequisites.sh`: Checks and installs required packages
+- `check_download_iso.sh`: Verifies if ISO exists or downloads if needed
+- `prepare_iso.sh`: Unpacks and modifies the ISO for autoinstallation
+- `build_custom_iso.sh`: Builds the custom autoinstall ISO
+- `prepare_usb.sh`: Formats and prepares the USB drive
+- `user-data`: Configuration file for the autoinstall process
 
 ## Usage
 
-1. Run the main script:
+1. Make the main script executable:
+   ```
+   chmod +x create_autoinstall_usb.sh
+   ```
 
-```bash
-sudo ./create_ubuntu_usb.sh
-```
+2. Run the main script:
+   ```
+   ./create_autoinstall_usb.sh
+   ```
 
-2. Follow the prompts to:
-   - Select or download an Ubuntu Server 24.04 image
-   - Choose a USB device
-   - Customize autoinstall templates (optional)
-   - Format and prepare the USB drive
-   - Test the installation with KVM (optional)
+3. Follow the prompts to complete the process.
 
 ## Customization
 
-The script creates template files in the `templates/` directory that you can customize:
+You can modify the `user-data` file to customize the installation:
 
-- `user-data.yml`: Contains system configuration, user accounts, etc.
-- `meta-data.yml`: Contains instance metadata
-- `network-config.yml`: Contains network configuration
-
-You can edit these files before running the USB preparation to customize the installation.
-
-## Testing
-
-The scripts provide several testing options:
-
-- `test_autoinstall.sh`: Validates the autoinstall configuration
-- `test_cloud_init.sh`: Validates the cloud-init configuration
-- `test_kvm.sh`: Tests the installation using KVM
-
-To run the tests individually:
-
-```bash
-sudo ./tests/test_autoinstall.sh
-sudo ./tests/test_cloud_init.sh
-sudo ./tests/test_kvm.sh /dev/sdX  # Replace with your USB device
-```
+- Change the username and password
+- Modify installed packages
+- Change locale and keyboard settings
+- Adjust partitioning strategy
+- Add additional late-commands
 
 ## Notes
 
-- The scripts require root privileges to format and prepare the USB drive.
-- All data on the selected USB drive will be erased during the process.
-- The default autoinstall configuration creates a user named `ubuntu` with password `ubuntu`.
-- The installation is completely non-interactive and will erase the target disk.
+- The default user credentials are:
+  - Username: ubuntu
+  - Password: ubuntu (hashed in user-data)
+- The autoinstall ISO is saved at `ubuntu-22.04-autoinstall.iso`
+- The process requires sudo privileges for certain operations
+- Be extremely careful when selecting the USB device to avoid data loss
 
-## Troubleshooting
+## Warning
 
-If you encounter issues:
+**THIS TOOL WILL COMPLETELY ERASE THE SELECTED USB DRIVE. ALL DATA WILL BE LOST.**
 
-1. Check that all dependencies are installed
-2. Verify that the USB drive is properly detected
-3. Ensure the Ubuntu image is valid
-4. Check the autoinstall configuration for errors
-5. Try testing with KVM before using on physical hardware
-
-## License
-
-This project is open source and available under the MIT License.
+Always double-check the device name before confirming the USB preparation.

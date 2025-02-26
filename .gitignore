@@ -1,0 +1,13 @@
+# Generated directories
+source-files/
+BOOT/
+
+# Generated ISO file
+ubuntu-22.04-autoinstall.iso
+
+# Downloaded ISO
+/home/cirrus0/Downloads/os_images/
+
+# Temporary files
+*.tmp
+*.bak
