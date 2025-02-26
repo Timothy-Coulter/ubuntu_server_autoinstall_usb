@@ -11,40 +11,38 @@ autoinstall:
         preserve: false
         wipe: superblock-recursive
         ptable: gpt
-      - type: lvm_volgroup
-        id: vg0
-        devices:
-          - disk-largest
-      - type: lvm_partition
-        id: lvm-root
-        volgroup: vg0
-        size: 15G
-      - type: lvm_partition
-        id: lvm-home
-        volgroup: vg0
+      - type: partition
+        id: efi-partition
+        device: disk-largest
+        size: 500M
+        flag: boot
+        grub_device: true
+      - type: partition
+        id: root-partition
+        device: disk-largest
         size: -1
       - type: format
-        id: format-root
-        volume: lvm-root
-        fstype: ext4
+        id: format-efi
+        volume: efi-partition
+        fstype: fat32
       - type: format
-        id: format-home
-        volume: lvm-home
+        id: format-root
+        volume: root-partition
         fstype: ext4
+      - type: mount
+        id: mount-efi
+        device: format-efi
+        path: /boot/efi
       - type: mount
         id: mount-root
         device: format-root
         path: /
-      - type: mount
-        id: mount-home
-        device: format-home
-        path: /home
   locale: en_US.UTF-8
   keyboard:
     layout: us
   identity:
     hostname: ubuntu-server
-    password: $6$PiTL.ZmMVYG6U4q4$qa8lkOtlAAioKLKqt1q1Ci03HUAE4xRnhrvNd1x1oaSVoma2sTRCHtvt2/QV61tn0QQF6m2e/n0Uf1fQ/3yid0
+    password: abcdefg
     username: ubuntu
   ssh:
     allow-pw: true
