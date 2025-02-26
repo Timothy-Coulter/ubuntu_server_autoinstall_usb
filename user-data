@@ -41,37 +41,37 @@ autoinstall:
   keyboard:
     layout: us
 
-  #cloud-config
-
   identity:
     hostname: ubuntu-server
-    password: abcdefg
-    username: ubuntu
+    username: cirrus1
+    # Using hashed password (this is a hash of 'cirrus1')
+    password: "$6$rounds=4096$GrIlTD3FxsyB8yh$fhMcI2.gRHGvGQkiXtZfNi3dTKBQgVz9P0rtAZ7g4AxF9zU/nfzJwf1O6L86WkuCQVGrNly3RnMG0QBcuwHRM0"
 
   users:
-    - name: cirrus123
-      sudo: ALL=(ALL) NOPASSWD:ALL
+    - name: cirrus1
+      gecos: Cirrus User
+      primary_group: cirrus1
       groups: sudo
       shell: /bin/bash
-      passwd: "$6$abcdefgh$ABC123..."  # Hashed password (SHA-512)
+      sudo: ALL=(ALL) NOPASSWD:ALL
       lock_passwd: false
 
-  chpasswd:
-    list: |
-      cirrus123:password123
-    expire: false
+  # Removed chpasswd section as password is now in identity section
 
   ssh:
     allow-pw: true
     install-server: true
+    
   apt:
     primary:
       - arches: [default]
         uri: http://us.archive.ubuntu.com/ubuntu/
+
   packages: 
     - build-essential
     - network-manager
     - dkms
+    
   package_update: true
   package_upgrade: true
 

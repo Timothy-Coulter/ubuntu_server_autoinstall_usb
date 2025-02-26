@@ -34,8 +34,7 @@ fi
 echo "Creating server directory for autoinstall files..."
 mkdir -p "$SOURCE_DIR/server"
 
-# Create empty meta-data file
-touch "$SOURCE_DIR/server/meta-data"
+# Note: meta-data file will be copied from the work directory by build_custom_iso.sh
 
 # Modify grub configuration
 echo "Modifying grub configuration..."
