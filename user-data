@@ -40,10 +40,27 @@ autoinstall:
   locale: en_US.UTF-8
   keyboard:
     layout: us
+
+  #cloud-config
+
   identity:
     hostname: ubuntu-server
     password: abcdefg
     username: ubuntu
+
+  users:
+    - name: cirrus123
+      sudo: ALL=(ALL) NOPASSWD:ALL
+      groups: sudo
+      shell: /bin/bash
+      passwd: "$6$abcdefgh$ABC123..."  # Hashed password (SHA-512)
+      lock_passwd: false
+
+  chpasswd:
+    list: |
+      cirrus123:password123
+    expire: false
+
   ssh:
     allow-pw: true
     install-server: true
@@ -57,6 +74,13 @@ autoinstall:
     - dkms
   package_update: true
   package_upgrade: true
+
+  runcmd:
+    - [ls, -l, /]
+    - [sh, -xc, 'echo $(date) '': hello world!''']
+    - [sh, -c, echo "=========hello world'========="]
+    - ls -l /root
+
   late-commands:
     # Changing from NetworkManager to networkd
     # move existing config out of the way
