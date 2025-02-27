@@ -2,8 +2,8 @@
 source-files/
 BOOT/
 
-# Generated ISO file
-ubuntu-22.04-autoinstall.iso
+# Generated ISO files
+*.iso
 
 # Downloaded ISO
 /home/cirrus0/Downloads/os_images/
