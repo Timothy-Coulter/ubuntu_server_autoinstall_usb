@@ -87,6 +87,12 @@ if [ -d "$WORK_DIR/source-files" ]; then
 fi
 echo "Cleanup completed."
 
+# Clean up ISO files
+echo ""
+echo "[Cleanup] Removing ISO files..."
+find "$WORK_DIR" -name "*.iso" -type f -exec rm -v {} \;
+echo "ISO files removed."
+
 echo ""
 echo "===================================================="
 echo "Ubuntu Server 24.04 Autoinstall USB creation process completed."
