@@ -6,8 +6,8 @@ SOURCE_DIR="$WORK_DIR/source-files"
 OUTPUT_ISO="$WORK_DIR/ubuntu-24.04-autoinstall.iso"
 BOOT_DIR="$WORK_DIR/BOOT"
 
-# Copy the user-data and meta-data files to the source directory
-echo "Copying user-data and meta-data to source directory..."
+# Copy the user-data, meta-data, and network_config files to the source directory
+echo "Copying user-data, meta-data, and network_config to source directory..."
 cp "$WORK_DIR/user-data" "$SOURCE_DIR/server/"
 cp "$WORK_DIR/meta-data" "$SOURCE_DIR/server/"
 

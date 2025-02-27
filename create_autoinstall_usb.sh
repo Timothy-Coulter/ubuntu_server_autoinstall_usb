@@ -73,6 +73,20 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Cleanup temporary directories
+echo ""
+echo "[Cleanup] Removing temporary directories..."
+if [ -d "$WORK_DIR/BOOT" ]; then
+    rm -rf "$WORK_DIR/BOOT"
+    echo "Removed $WORK_DIR/BOOT directory."
+fi
+
+if [ -d "$WORK_DIR/source-files" ]; then
+    rm -rf "$WORK_DIR/source-files"
+    echo "Removed $WORK_DIR/source-files directory."
+fi
+echo "Cleanup completed."
+
 echo ""
 echo "===================================================="
 echo "Ubuntu Server 24.04 Autoinstall USB creation process completed."
