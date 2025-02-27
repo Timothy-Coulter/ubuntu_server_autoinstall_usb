@@ -63,7 +63,7 @@ if [[ "$CONTINUE" != "yes" ]]; then
     echo "USB preparation skipped."
     echo "You can run ./prepare_usb.sh later to prepare your USB drive."
     echo ""
-    echo "Custom autoinstall ISO is available at: $WORK_DIR/ubuntu-24.04-autoinstall.iso"
+    echo "Custom autoinstall ISO is available at:   ubuntu-24.04-autoinstall.iso"
     exit 0
 fi
 

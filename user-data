@@ -45,7 +45,7 @@ autoinstall:
     hostname: ubuntu-server
     username: cirrus1
     # Using hashed password (this is a hash of 'cirrus1')
-    password: "$6$rounds=4096$GrIlTD3FxsyB8yh$fhMcI2.gRHGvGQkiXtZfNi3dTKBQgVz9P0rtAZ7g4AxF9zU/nfzJwf1O6L86WkuCQVGrNly3RnMG0QBcuwHRM0"
+    password: "$6$rounds=4096$1fLL6vRdpPln3MWh$My4oAeYvpNAG4vN2wjmqeljCUIOAGPkZbmO.YnifntPwpsqyiJeH3CT42KJw/eknDkmwPxYrX/SMAC2qlwLZz1"
 
   users:
     - name: cirrus1
